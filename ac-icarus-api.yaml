@@ -6,6 +6,7 @@ metadata:
   description: ac-icarus API
   tags:
     - ac-icarus
+    - java
 spec:
   type: openapi
   lifecycle: production
