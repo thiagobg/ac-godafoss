@@ -1,0 +1,951 @@
+swagger: "2.0"
+info:
+  description: ac-icarus
+  version: '1.0'
+  title: ac-icarus
+  termsOfService: 'urn:tos'
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0'
+host: 'ac-icarus-api-gateway-yufxpgkgfa-uc.a.run.app'
+schemes:
+  - https
+produces:
+  - application/json
+x-google-backend:
+  address: https://ac-icarus-api-yufxpgkgfa-uc.a.run.app
+  protocol: h2
+  deadline: 70.0
+basePath: /
+tags:
+  - name: basic-error-controller
+    description: Basic Error Controller
+  - name: batch-api
+    description: Batch Api
+  - name: mail-jet-event-resource
+    description: Mail Jet Event Resource
+  - name: transactional-email-api
+    description: Transactional Email Api
+  - name: health-info-resource
+    description: Health Info Resource
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "key"
+    in: "query"
+paths:
+  /api/v1/batch/list:
+    post:
+      tags:
+        - batch-api
+      summary: importContacts
+      operationId: importContactsUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/ListRequest'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/DeferredResult«ResponseEntity«object»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+      security:
+      - api_key: []
+  '/api/v1/batch/list/{listId}':
+    get:
+      tags:
+        - batch-api
+      summary: getImportStatus
+      operationId: getImportStatusUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: listId
+          in: path
+          description: listId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DeferredResult«ResponseEntity«object»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+      security:
+      - api_key: []
+  /api/v1/email/send:
+    post:
+      tags:
+        - transactional-email-api
+      summary: send
+      operationId: sendUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: requests
+          description: requests
+          required: true
+          schema:
+            type: object
+            properties:
+              items:
+                type: array
+                items:
+                  $ref: '#/definitions/EmailRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DeferredResult«ResponseEntity«object»»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+      security:
+      - api_key: []
+  /api/v1/email/validate:
+    post:
+      tags:
+        - email-quality-api
+      summary: get
+      operationId: emailQualityUsingPost
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/EmailQualityRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DeferredResultOfResponseEntityOfEmailQualityResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+      security:
+        - api_key: [ ]
+  /api/v1/event/get:
+    post:
+      tags:
+        - event-email-api
+      summary: get
+      operationId: getUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/EventEmailRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DeferredResult«ResponseEntity«List«EventEmailResponse»»»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+      security:
+      - api_key: []
+  /api/v1/webhook/getresponse/event:
+    get:
+      tags:
+        - get-response-event-resource
+      summary: save
+      operationId: saveUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: ACCOUNT_ID
+          in: query
+          description: accountId
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: CAMPAIGN_ID
+          in: query
+          description: campaignId
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: CONTACT_ID
+          in: query
+          description: contactId
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: GOAL_ID
+          in: query
+          description: goalId
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: LINK_ID
+          in: query
+          description: linkId
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: MESSAGE_ID
+          in: query
+          description: messageId
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: OPTION_ID
+          in: query
+          description: optionId
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: QUESTION_ID
+          in: query
+          description: questionId
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: SURVEY_ID
+          in: query
+          description: surveyId
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: account_login
+          in: query
+          description: accountLogin
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: action
+          in: query
+          description: action
+          required: true
+          type: string
+          allowEmptyValue: false
+        - name: campaign_name
+          in: query
+          description: campaignName
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: contact_email
+          in: query
+          description: contactEmail
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: contact_ip
+          in: query
+          description: contactIp
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: contact_name
+          in: query
+          description: contactName
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: contact_origin
+          in: query
+          description: contactOrigin
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: goal_domain
+          in: query
+          description: goalDomain
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: goal_name
+          in: query
+          description: goalName
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: goal_param_0
+          in: query
+          description: goalParam0
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: goal_param_1
+          in: query
+          description: goalParam1
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: goal_param_2
+          in: query
+          description: goalParam2
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: goal_param_3
+          in: query
+          description: goalParam3
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: goal_param_4
+          in: query
+          description: goalParam4
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: goal_param_5
+          in: query
+          description: goalParam5
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: goal_profile
+          in: query
+          description: goalProfile
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: goal_url
+          in: query
+          description: goalUrl
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: link_url
+          in: query
+          description: linkUrl
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: message_name
+          in: query
+          description: messageName
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: message_subject
+          in: query
+          description: messageSubject
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: option_name
+          in: query
+          description: optionName
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: question_answer
+          in: query
+          description: questionAnswer
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: question_name
+          in: query
+          description: questionName
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: survey_name
+          in: query
+          description: surveyName
+          required: false
+          type: string
+          allowEmptyValue: false
+        - name: survey_title
+          in: query
+          description: surveyTitle
+          required: false
+          type: string
+          allowEmptyValue: false
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DeferredResult«ResponseEntity«object»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+      security:
+          - api_key: []
+  /api/v1/webhook/mailjet/event:
+    post:
+      tags:
+        - mail-jet-event-resource
+      summary: save
+      operationId: saveUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: requests
+          description: requests
+          required: true
+          schema:
+            type: object
+            properties:
+              items:
+                type: array
+                items:
+                  $ref: '#/definitions/MailjetEventRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DeferredResult«ResponseEntity«object»»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+      security:
+      - api_key: []
+  /health:
+    get:
+      tags:
+        - health-info-resource
+      summary: info
+      operationId: infoUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DeferredResult«ResponseEntity«object»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+      security:
+        - api_key: []
+  /health/db:
+    get:
+      tags:
+        - health-info-resource
+      summary: dbInfo
+      operationId: dbInfoUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DeferredResult«ResponseEntity«object»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+      security:
+        - api_key: []
+  /error:
+    get:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingGET
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+      security:
+      - api_key: []
+    head:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingHEAD
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+      security:
+      - api_key: []
+    post:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+      security:
+      - api_key: []
+    put:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+      security:
+      - api_key: []
+    delete:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingDELETE
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+      security:
+      - api_key: []
+    options:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingOPTIONS
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+      security:
+      - api_key: []
+    patch:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingPATCH
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+      security:
+      - api_key: []
+definitions:
+  DeferredResultOfResponseEntityOfEmailQualityResponse:
+    type: object
+    title: DeferredResultOfResponseEntityOfEmailQualityResponse
+  DeferredResult«ResponseEntity«List«EventEmailResponse»»»:
+    type: object
+    properties:
+      result:
+        type: object
+      setOrExpired:
+        type: boolean
+    title: DeferredResult«ResponseEntity«List«EventEmailResponse»»»
+  DeferredResult«ResponseEntity«object»»:
+    type: object
+    properties:
+      result:
+        type: object
+      setOrExpired:
+        type: boolean
+    title: DeferredResult«ResponseEntity«object»»
+  EmailAttachmentRequest:
+    type: object
+    properties:
+      contentType:
+        type: string
+      data:
+        type: string
+      fileName:
+        type: string
+    title: EmailAttachmentRequest
+  EmailQualityRequest:
+    type: object
+    title: EmailQualityRequest
+  EmailQualityResponse:
+    type: object
+    title: EmailQualityResponse
+  EmailRequest:
+    type: object
+    properties:
+      attachments:
+        type: array
+        items:
+          $ref: '#/definitions/EmailAttachmentRequest'
+      bcc:
+        type: array
+        items:
+          type: string
+      bodyType:
+        type: string
+        enum:
+          - HTML
+          - TEXT
+      cc:
+        type: array
+        items:
+          type: string
+      customId:
+        type: string
+      from:
+        type: string
+      identifier:
+        type: string
+      params:
+        type: object
+      personal:
+        type: string
+      provider:
+        type: string
+        enum:
+          - GETRESPONSE
+          - MAILJET
+      reply:
+        type: string
+      subject:
+        type: string
+      template:
+        type: string
+      to:
+        type: array
+        items:
+          type: string
+      useProviderTemplate:
+        type: boolean
+    title: EmailRequest
+  EventEmailRequest:
+    type: object
+    properties:
+      email:
+        type: string
+      eventType:
+        type: string
+      limit:
+        type: integer
+        format: int32
+      offset:
+        type: integer
+        format: int32
+    title: EventEmailRequest
+  EventEmailResponse:
+    type: object
+    properties:
+      arrival:
+        type: string
+        format: date-time
+      contactId:
+        type: string
+      createdOn:
+        type: string
+        format: date-time
+      customId:
+        type: string
+      eventType:
+        type: string
+      internalProvider:
+        type: string
+      ip:
+        type: string
+      messageId:
+        type: string
+      receiver:
+        type: string
+      updatedAt:
+        type: string
+        format: date-time
+    title: EventEmailResponse
+  ListRequest:
+    type: object
+    properties:
+      listId:
+        type: string
+      listName:
+        type: string
+      provider:
+        type: string
+        enum:
+          - GETRESPONSE
+          - MAILJET
+    title: ListRequest
+  MailjetEventRequest:
+    type: object
+    properties:
+      CustomID:
+        type: string
+      MessageID:
+        type: string
+      Payload:
+        type: string
+      agent:
+        type: string
+      blocked:
+        type: boolean
+      customcampaign:
+        type: string
+      email:
+        type: string
+      error:
+        type: string
+      error_related_to:
+        type: string
+      event:
+        type: string
+      geo:
+        type: string
+      hard_bounce:
+        type: boolean
+      ip:
+        type: string
+      mj_campaign_id:
+        type: string
+      mj_contact_id:
+        type: string
+      'mj_list_id ':
+        type: string
+      mj_message_id:
+        type: string
+      smtp_reply:
+        type: string
+      source:
+        type: string
+      time:
+        type: string
+        format: date-time
+      url:
+        type: string
+    title: MailjetEventRequest
+  ModelAndView:
+    type: object
+    properties:
+      empty:
+        type: boolean
+      model:
+        type: object
+      modelMap:
+        type: object
+        additionalProperties:
+          type: object
+      reference:
+        type: boolean
+      status:
+        type: string
+        enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+      view:
+        $ref: '#/definitions/View'
+      viewName:
+        type: string
+    title: ModelAndView
+  View:
+    type: object
+    properties:
+      contentType:
+        type: string
+    title: View
