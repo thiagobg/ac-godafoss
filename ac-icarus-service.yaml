@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ac-icarus
+  description: ac-icarus
+spec:
+  type: service
+  lifecycle: production
+  owner: dev@acordocerto.com.br
+  implementsApis:
+    - ac-icarus
