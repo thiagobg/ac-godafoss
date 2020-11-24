@@ -1,9 +1,0 @@
-apiVersion: backstage.io/v1alpha1
-kind: Location
-metadata:
-  name: ac-godafoss-apis
-  description: All APIs
-spec:
-  type: github
-  targets:
-    - https://github.com/AcordoCertoBR/ac-godafoss/blob/main/ac-icarus-api.yaml
