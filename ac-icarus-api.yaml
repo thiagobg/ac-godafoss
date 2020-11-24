@@ -5,9 +5,8 @@ metadata:
   name: ac-icarus
   description: ac-icarus API
   tags:
-    - ac-icarus
-    - java
     - email
+    - data
 spec:
   type: openapi
   lifecycle: production
