@@ -6,6 +6,6 @@ metadata:
 spec:
   type: service
   lifecycle: production
-  owner: dev@acordocerto.com.br
+  owner: italo.souza@acordocerto.com.br
   implementsApis:
     - ac-icarus
