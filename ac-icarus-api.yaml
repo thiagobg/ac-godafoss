@@ -11,4 +11,4 @@ spec:
   lifecycle: production
   owner: dev@acordocerto.com.br
   definition:
-    $text: https://github.com/AcordoCertoBR/ac-icarus/blob/master/openapi-run.yaml
+    $text: https://github.com/AcordoCertoBR/ac-godafoss/blob/main/ac-icarus-api-swagger.yaml
