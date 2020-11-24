@@ -9,6 +9,6 @@ metadata:
 spec:
   type: openapi
   lifecycle: production
-  owner: dev@acordocerto.com.br
+  owner: italo.souza@acordocerto.com.br
   definition:
     $text: https://github.com/AcordoCertoBR/ac-godafoss/blob/main/ac-icarus-api-swagger.yaml
