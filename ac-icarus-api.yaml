@@ -1,0 +1,14 @@
+  
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: ac-icarus
+  description: ac-icarus API
+  tags:
+    - ac-icarus
+spec:
+  type: openapi
+  lifecycle: production
+  owner: dev@acordocerto.com.br
+  definition:
+    $text: https://github.com/AcordoCertoBR/ac-icarus/blob/master/openapi-run.yaml
