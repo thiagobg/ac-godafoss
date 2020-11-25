@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: hello-world-node-api
+  description: node-api
+spec:
+  type: service
+  lifecycle: production
+  owner: sauter.user@acordocerto.com.br
+  implementsApis:
+    - hello-world-node-api
